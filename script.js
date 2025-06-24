@@ -1,26 +1,36 @@
+// Function to validate URL
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;  
+  }
+}
 
-let inputVal=document.querySelector('#inputVal');
-let outputVal=document.querySelector('#outputVal');
-let btn=document.querySelector('#btnShort')
-let btnCopy=document.querySelector('#copy')
+let inputVal = document.querySelector('#inputVal');
+let outputVal = document.querySelector('#outputVal');
+let btn = document.querySelector('#btnShort');
+let btnCopy = document.querySelector('#copy');
 
+btn.addEventListener('click', () => {
+  let op = inputVal.value.trim();
 
+  if (!op) return alert("Enter a URL first");
 
-btn.addEventListener('click', ()=>{
-       let op = inputVal.value;
+  // Validate URL
+  if (!isValidUrl(op)) {
+    return alert("Please enter a valid URL (starting with http:// or https://)");
+  }
 
-    if (!op) return alert("Enter a URL first");
+  let code = Math.random().toString(36).substring(2, 8); 
+  let fakeShortURL = "https://by.ly/" + code;
 
-    let code = Math.random().toString(36).substring(2, 8); 
-    let fakeShortURL = "https://by.ly/" + code;
+  outputVal.value = fakeShortURL;
+  console.log(`Original: ${op}, Shortened: ${fakeShortURL}`);
+});
 
-    outputVal.value = fakeShortURL;
-    console.log(`Original: ${op}, Shortened: ${fakeShortURL}`);
-
-
-})
-
-btnCopy.addEventListener('click', ()=>{
+btnCopy.addEventListener('click', () => {
   let textToCopy = outputVal.value;
 
   if (!textToCopy) return alert("Nothing to copy!");
@@ -39,5 +49,4 @@ btnCopy.addEventListener('click', ()=>{
   console.log("Copied text:", textToCopy);
   console.log("Input field cleared");
   console.log("Output field cleared");
-
-})
+});
